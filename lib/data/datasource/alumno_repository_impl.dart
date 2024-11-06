@@ -7,7 +7,7 @@ class AlumnoRepositoryImpl extends AlumnoRepositoryInterface {
   @override
   Future<Response> getAlumnoDeberes(int idMateria) async {
     try {
-      var url = Uri.parse('${baseURL}alumno-materia/$idMateria');
+      var url = Uri.parse('${baseURL}alumno/tareas/$idMateria');
       final response = await http.get(
         url,
         headers: headers,
@@ -21,7 +21,7 @@ class AlumnoRepositoryImpl extends AlumnoRepositoryInterface {
   @override
   Future<Response> getAlumnoMaterias(int idAlumno) async {
     try {
-      var url = Uri.parse('${baseURL}alumno-materia/$idAlumno');
+      var url = Uri.parse('${baseURL}alumno/materias/$idAlumno');
       final response = await http.get(
         url,
         headers: headers,

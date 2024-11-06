@@ -9,6 +9,7 @@ import 'package:agenda_electronica/domain/repository/profesor_repository_intr.da
 import 'package:agenda_electronica/services/globals.dart';
 import 'package:agenda_electronica/ui/screens/Alumno/alumno_bloc.dart';
 import 'package:agenda_electronica/ui/screens/Alumno/alumno_screen.dart';
+import 'package:agenda_electronica/ui/screens/Apoderado/apoderado_screen.dart';
 import 'package:agenda_electronica/ui/screens/Profesor/profesor_bloc.dart';
 import 'package:agenda_electronica/ui/screens/Profesor/profesor_screen.dart';
 import 'package:flutter/material.dart';
@@ -70,8 +71,8 @@ class MyApp extends StatelessWidget {
               title: 'Agenda Electronica',
               theme: poppins,
               debugShowCheckedModeBanner: false,
-              home: ProfesorScreen.init(
-                  context) //AlumnoScreen.init(context), // Iniciar la pantalla principal aquí
+              home:
+                  ApoderadoScreen() //AlumnoScreen.init(context), // Iniciar la pantalla principal aquí
               );
         },
       ),

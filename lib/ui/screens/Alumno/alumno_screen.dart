@@ -2,7 +2,7 @@ import 'package:agenda_electronica/domain/repository/alumno_repository_intr.dart
 import 'package:agenda_electronica/domain/response/alumno_materia_response.dart';
 import 'package:agenda_electronica/services/globals.dart';
 import 'package:agenda_electronica/ui/screens/Alumno/alumno_bloc.dart';
-import 'package:agenda_electronica/ui/screens/Alumno/alumno_materia_screen.dart';
+import 'package:agenda_electronica/ui/screens/Alumno/alumno_tareas_screen.dart';
 import 'package:agenda_electronica/ui/screens/Alumno/alumno_notifications_screen.dart';
 import 'package:flutter/material.dart';
 
@@ -74,8 +74,9 @@ class AlumnoScreen extends StatelessWidget {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) =>
-                                  const AlumnoMateriaScreen()));
+                              builder: (context) => AlumnoTareasScreen(
+                                    idMateria: alumnoMateria.id,
+                                  )));
                     },
                     child: MateriaDetalle(
                       alumnoMateria: alumnoMateria,

@@ -1,3 +1,4 @@
+import 'package:agenda_electronica/domain/response/alumno_tareas_materia_response.dart';
 import 'package:agenda_electronica/services/globals.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -5,7 +6,8 @@ import 'package:file_picker/file_picker.dart';
 import 'package:http/http.dart' as http;
 
 class AlumnoTareaScreen extends StatefulWidget {
-  const AlumnoTareaScreen({super.key});
+  const AlumnoTareaScreen({super.key, required this.alumnoTareaMateria});
+  final AlumnoTareasMateria alumnoTareaMateria;
 
   @override
   State<AlumnoTareaScreen> createState() => _AlumnoTareaScreenState();
@@ -99,11 +101,55 @@ class _AlumnoTareaScreenState extends State<AlumnoTareaScreen> {
           child: SingleChildScrollView(
             child: Column(
               children: [
-                Center(
-                  child: Text(
-                    "Aqui va la descripcion",
-                    style: Theme.of(context).textTheme.bodyLarge,
-                  ),
+                Text(
+                  widget.alumnoTareaMateria.titulo,
+                  style: Theme.of(context)
+                      .textTheme
+                      .titleLarge!
+                      .copyWith(fontWeight: FontWeight.bold),
+                ),
+                SizedBox(
+                  height: 15.sp,
+                ),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    Text(
+                      "Descripcion: ",
+                      style: Theme.of(context)
+                          .textTheme
+                          .bodyLarge!
+                          .copyWith(fontWeight: FontWeight.bold),
+                    ),
+                    SizedBox(
+                      height: 10.sp,
+                    ),
+                    Text(
+                      widget.alumnoTareaMateria.descripcion,
+                      style: Theme.of(context).textTheme.bodyLarge,
+                    ),
+                  ],
+                ),
+                SizedBox(
+                  height: 15.sp,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      "Fecha de Pesentacion: ",
+                      style: Theme.of(context)
+                          .textTheme
+                          .bodyLarge!
+                          .copyWith(fontWeight: FontWeight.bold),
+                    ),
+                    Text(
+                      widget.alumnoTareaMateria.fechaPresentacion
+                          .toString()
+                          .split(" ")[0],
+                      style: Theme.of(context).textTheme.bodyLarge,
+                    ),
+                  ],
                 ),
                 ElevatedButton(
                   onPressed: _pickMultipleFiles,
