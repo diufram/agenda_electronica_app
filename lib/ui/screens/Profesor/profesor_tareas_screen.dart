@@ -1,8 +1,8 @@
 import 'package:agenda_electronica/domain/response/profesor_tareas_materia_response.dart';
 import 'package:agenda_electronica/services/globals.dart';
-import 'package:agenda_electronica/ui/screens/Alumno/alumno_tarea_screen.dart';
 import 'package:agenda_electronica/ui/screens/Profesor/profesor_asistencia_screen.dart';
 import 'package:agenda_electronica/ui/screens/Profesor/profesor_bloc.dart';
+import 'package:agenda_electronica/ui/screens/Profesor/profesor_tarea_crear_screen.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -52,6 +52,13 @@ class ProfesorTareasScreen extends StatelessWidget {
                         builder: (context) => ProfesorAsistenciaScreen(
                               idMateriaHorario: idMateriaHorario,
                             )));
+              } else if (value == "3") {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => ProfesorTareaCrearScreen(
+                              idMateria: idMateriaHorario,
+                            )));
               }
             },
             itemBuilder: (BuildContext context) {
@@ -77,7 +84,7 @@ class ProfesorTareasScreen extends StatelessWidget {
                   ),
                 ),
                 PopupMenuItem<String>(
-                  value: '2',
+                  value: '3',
                   child: ListTile(
                     leading: const Icon(
                       Icons.attach_file_rounded,

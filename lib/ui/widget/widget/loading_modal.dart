@@ -18,7 +18,7 @@ loading(BuildContext context) {
               ))
             : const Center(
                 child: CircularProgressIndicator(
-                color: backgroundPrimary,
+                color: backgroundOptional,
               ));
       });
 }

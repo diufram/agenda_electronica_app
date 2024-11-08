@@ -1,15 +1,9 @@
-import 'dart:convert';
-
-import 'package:agenda_electronica/domain/models/login_model.dart';
 import 'package:agenda_electronica/domain/repository/auth_repository_intr.dart';
 import 'package:agenda_electronica/domain/repository/local_repository_intr.dart';
 import 'package:agenda_electronica/domain/request/login_request.dart';
+import 'package:agenda_electronica/domain/response/login_response.dart';
 import 'package:flutter/material.dart';
-
-enum LoginState {
-  loading,
-  initial,
-}
+import 'package:onesignal_flutter/onesignal_flutter.dart';
 
 class LoginBloc extends ChangeNotifier {
   LocalRepositoryInterface localRepositoryInterface;
@@ -19,27 +13,23 @@ class LoginBloc extends ChangeNotifier {
       {required this.authRepositoryInterface,
       required this.localRepositoryInterface});
 
-  TextEditingController emailInput = TextEditingController();
-  TextEditingController passwordInput = TextEditingController();
+  TextEditingController ciController = TextEditingController();
 
-  TextEditingController namedInput = TextEditingController();
-  TextEditingController phoneInput = TextEditingController();
+  Future<int> login() async {
+    final token = OneSignal.User.pushSubscription.id;
+    final login = LoginRequest(
+      ci: ciController.text,
+      token: token!,
+    );
 
-  String error = "";
-
-  Future<void> login() async {
-    try {
-      final login = LoginRequest(emailInput.text, passwordInput.text);
-      final response = await authRepositoryInterface.login(login);
-      if (response.statusCode == 404) {
-        error = jsonDecode(response.body)['message'].toString();
-        notifyListeners();
-      } else if (response.statusCode == 200) {
-        final res = loginFromJson(response.body);
-        await localRepositoryInterface.saveToken(res.token);
-        final user = res.user;
-        await localRepositoryInterface.saveUser(user);
-      }
-    } catch (e) {}
+    final response = await authRepositoryInterface.login(login);
+    if (response.statusCode == 401) {
+      return 0;
+    } else if (response.statusCode == 200) {
+      final login = loginResponseFromJson(response.body);
+      await localRepositoryInterface.saveUser(login);
+      return login.tipo;
+    }
+    return 0;
   }
 }

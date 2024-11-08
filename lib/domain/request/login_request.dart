@@ -1,5 +1,8 @@
 class LoginRequest {
-  const LoginRequest(this.email, this.password);
-  final String email;
-  final String password;
+  const LoginRequest({
+    required this.ci,
+    required this.token,
+  });
+  final String ci;
+  final String token;
 }

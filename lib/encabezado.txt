@@ -9,7 +9,7 @@ curl -X "POST" "https://api.onesignal.com/notifications" \
   "app_id": "bde019e1-c5b5-4852-9135-a829a99244b1",
   "contents": {"en": "Esto Es una prueba"},
   "include_subscription_ids": [
-    "af79582e-eeff-4368-8a3b-7f387eb16f8e"
+    "d9f11b54-e0a7-410c-a1d7-1a6dcc77fea1"
   ],
   "headings": { "en": "Esta es la descripcion"}
 }'

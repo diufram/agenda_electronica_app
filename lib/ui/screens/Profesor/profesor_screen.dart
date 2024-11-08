@@ -1,10 +1,10 @@
+import 'package:agenda_electronica/domain/repository/local_repository_intr.dart';
 import 'package:agenda_electronica/domain/repository/profesor_repository_intr.dart';
 import 'package:agenda_electronica/domain/response/profesor_cursos_response.dart';
 import 'package:agenda_electronica/services/globals.dart';
 import 'package:agenda_electronica/ui/screens/Alumno/alumno_notifications_screen.dart';
 import 'package:agenda_electronica/ui/screens/Profesor/profesor_bloc.dart';
 import 'package:agenda_electronica/ui/screens/Profesor/profesor_materia_screen.dart';
-import 'package:agenda_electronica/ui/screens/splash/splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
@@ -16,7 +16,8 @@ class ProfesorScreen extends StatelessWidget {
     return ChangeNotifierProvider(
       create: (_) => ProfesorBloc(
           profesorRepositoryInterface:
-              context.read<ProfesorRepositoryInterface>()),
+              context.read<ProfesorRepositoryInterface>(),
+          localRepositoryInterface: context.read<LocalRepositoryInterface>()),
       builder: (_, __) => const ProfesorScreen._(),
     );
   }

@@ -12,11 +12,11 @@ class AuthRepositoryImpl extends AuthRepositoryInterface {
   Future<Response> login(LoginRequest login) async {
     try {
       Map data = {
-        "email": login.email,
-        "password": login.password,
+        "ci": login.ci,
+        "token": login.token,
       };
       var body = json.encode(data);
-      var url = Uri.parse('${baseURL}api/login');
+      var url = Uri.parse('${baseURL}login');
       final response = await http.post(
         url,
         headers: headers,

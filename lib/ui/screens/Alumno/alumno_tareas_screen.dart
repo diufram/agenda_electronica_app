@@ -1,5 +1,4 @@
 import 'package:agenda_electronica/domain/response/alumno_tareas_materia_response.dart';
-import 'package:agenda_electronica/main.dart';
 import 'package:agenda_electronica/services/globals.dart';
 import 'package:agenda_electronica/ui/screens/Alumno/alumno_bloc.dart';
 import 'package:agenda_electronica/ui/screens/Alumno/alumno_tarea_screen.dart';

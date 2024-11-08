@@ -1,4 +1,5 @@
 import 'package:agenda_electronica/domain/repository/alumno_repository_intr.dart';
+import 'package:agenda_electronica/domain/repository/local_repository_intr.dart';
 import 'package:agenda_electronica/domain/response/alumno_materia_response.dart';
 import 'package:agenda_electronica/services/globals.dart';
 import 'package:agenda_electronica/ui/screens/Alumno/alumno_bloc.dart';
@@ -15,7 +16,8 @@ class AlumnoScreen extends StatelessWidget {
   static Widget init(BuildContext context) {
     return ChangeNotifierProvider(
       create: (_) => AlumnoBloc(
-          alumnoRepositoryInterface: context.read<AlumnoRepositoryInterface>()),
+          alumnoRepositoryInterface: context.read<AlumnoRepositoryInterface>(),
+          localRepositoryInterface: context.read<LocalRepositoryInterface>()),
       builder: (_, __) => const AlumnoScreen._(),
     );
   }
