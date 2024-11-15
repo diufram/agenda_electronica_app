@@ -23,7 +23,7 @@ class CustomTextField extends StatelessWidget {
   final String hintText;
   final String? labelText; // Definimos labelText como String opcional
   final Function(String?)? validate;
-  final double width;
+  final double? width;
   final double? height;
   final int? maxLines;
   final bool? readOnly;

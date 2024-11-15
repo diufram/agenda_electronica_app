@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 import 'package:path/path.dart';
 import 'package:agenda_electronica/domain/repository/alumno_repository_intr.dart';
@@ -37,7 +38,7 @@ class AlumnoRepositoryImpl extends AlumnoRepositoryInterface {
   }
 
   @override
-  Future<http.Response> getArchivoTarea(int idTarea) async {
+  Future<Response> getArchivoTarea(int idTarea) async {
     try {
       var url = Uri.parse('${baseURL}alumno/tarea/$idTarea');
       final response = await http.get(
@@ -73,6 +74,46 @@ class AlumnoRepositoryImpl extends AlumnoRepositoryInterface {
       );
       // Enviar la solicitud y obtener la respuesta
       await request.send();
+    } catch (e) {
+      throw Exception(e);
+    }
+  }
+
+  @override
+  Future<Response> generarHorario(int idAlumno) async {
+    try {
+      var url = Uri.parse('${baseURL}alumno/generar-horario/$idAlumno');
+      final response = await http.post(
+        url,
+        headers: headers,
+      );
+      return response;
+    } catch (e) {
+      throw Exception(e);
+    }
+  }
+
+  @override
+  Future<Response> getHorarioGenerado(int idAlumno) async {
+    try {
+      var url = Uri.parse('${baseURL}alumno/horario/$idAlumno');
+      final response = await http.get(
+        url,
+        headers: headers,
+      );
+      return response;
+    } catch (e) {
+      throw Exception(e);
+    }
+  }
+
+  @override
+  Future<void> saveHorario(int idAlumno, String horario) async {
+    try {
+      var url = Uri.parse('${baseURL}alumno/guardar-horario/$idAlumno');
+      Map data = {"horario": horario};
+
+      await http.post(url, headers: headers, body: jsonEncode(data));
     } catch (e) {
       throw Exception(e);
     }

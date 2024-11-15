@@ -17,10 +17,11 @@ class AlumnoBloc extends ChangeNotifier {
       {required this.alumnoRepositoryInterface,
       required this.localRepositoryInterface});
   File? archivoSeleccionado;
+
   Future<List<AlumnoMateria>> getAlumnoMaterias() async {
     final id = await localRepositoryInterface.getUser();
 
-    final response = await alumnoRepositoryInterface.getAlumnoMaterias(id);
+    final response = await alumnoRepositoryInterface.getAlumnoMaterias(2);
     return alumnoMateriaFromJson(response.body);
   }
 
@@ -75,6 +76,31 @@ class AlumnoBloc extends ChangeNotifier {
   Future<void> presentarTarea(int idTarea) async {
     final id = await localRepositoryInterface.getUser();
     await alumnoRepositoryInterface.presentarTarea(
-        idTarea, id, archivoSeleccionado!);
+        idTarea, 2, archivoSeleccionado!);
+  }
+
+  String? json;
+  Future<bool> generarHorario() async {
+    try {
+      if (json != null) {
+        json = null;
+        notifyListeners();
+      }
+      final response = await alumnoRepositoryInterface.generarHorario(2);
+      if (response.statusCode == 200) {
+        json = response.body;
+        print(json);
+        notifyListeners();
+        return true;
+      }
+      return false;
+    } catch (e) {
+      return false;
+    }
+  }
+
+  Future<String> getHorarioGenerado() async {
+    final response = await alumnoRepositoryInterface.getHorarioGenerado(2);
+    return response.body;
   }
 }

@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:agenda_electronica/domain/request/alumnoid_request.dart';
 import 'package:path/path.dart';
 import 'package:agenda_electronica/domain/repository/profesor_repository_intr.dart';
 import 'package:agenda_electronica/domain/request/tarea_request.dart';
@@ -95,6 +96,61 @@ class ProfesorRepositoryImpl extends ProfesorRepositoryInterface {
       );
       // Enviar la solicitud y obtener la respuesta
       await request.send();
+    } catch (e) {
+      throw Exception(e);
+    }
+  }
+
+  @override
+  Future<void> createAsistencia(int idMateria, List<int> alumnos) async {
+    try {
+      var url = Uri.parse('${baseURL}profesor/tomar/asistencia/$idMateria');
+      await http.post(url,
+          headers: headers, body: jsonEncode({'alumnos_id': alumnos}));
+    } catch (e) {
+      throw Exception(e);
+    }
+  }
+
+  @override
+  Future<Response> getAsistenciasFromMateria(int idMateria) async {
+    try {
+      var url = Uri.parse('${baseURL}profesor/asistencias/$idMateria');
+      return await http.get(url, headers: headers);
+    } catch (e) {
+      throw Exception(e);
+    }
+  }
+
+  @override
+  Future<Response> getTareasPresentadas(int idTarea) async {
+    try {
+      var url = Uri.parse('${baseURL}profesor/tareas-presentadas/$idTarea');
+      return await http.get(url, headers: headers);
+    } catch (e) {
+      throw Exception(e);
+    }
+  }
+
+  @override
+  Future<Response> getArchivoTarea(int idTareaAlumno) async {
+    try {
+      var url = Uri.parse('${baseURL}profesor/tarea-alumno/$idTareaAlumno');
+      final response = await http.get(
+        url,
+        headers: headers,
+      );
+      return response;
+    } catch (e) {
+      throw Exception(e);
+    }
+  }
+
+  @override
+  Future<void> asignarNota(int idTareaAlumno, double nota) async {
+    try {
+      var url = Uri.parse('${baseURL}profesor/asignar/$idTareaAlumno/nota');
+      await http.post(url, headers: headers, body: jsonEncode({"nota": nota}));
     } catch (e) {
       throw Exception(e);
     }

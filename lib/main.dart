@@ -10,8 +10,10 @@ import 'package:agenda_electronica/domain/repository/local_repository_intr.dart'
 import 'package:agenda_electronica/domain/repository/profesor_repository_intr.dart';
 import 'package:agenda_electronica/services/globals.dart';
 import 'package:agenda_electronica/ui/screens/Alumno/alumno_bloc.dart';
+import 'package:agenda_electronica/ui/screens/Alumno/alumno_screen.dart';
 import 'package:agenda_electronica/ui/screens/Apoderado/apoderado_bloc.dart';
 import 'package:agenda_electronica/ui/screens/Profesor/profesor_bloc.dart';
+import 'package:agenda_electronica/ui/screens/Profesor/profesor_screen.dart';
 import 'package:agenda_electronica/ui/screens/login/login_bloc.dart';
 import 'package:agenda_electronica/ui/screens/login/login_screnn.dart';
 import 'package:flutter/material.dart';
@@ -89,12 +91,12 @@ class MyApp extends StatelessWidget {
         minTextAdapt: true,
         builder: (context, child) {
           return MaterialApp(
-              builder: FToastBuilder(),
-              title: 'Agenda Electronica',
-              theme: poppins,
-              debugShowCheckedModeBanner: false,
-              home: LoginScrenn() //.init(context),
-              );
+            builder: FToastBuilder(),
+            title: 'Agenda Electronica',
+            theme: poppins,
+            debugShowCheckedModeBanner: false,
+            home: AlumnoScreen.init(context),
+          );
         },
       ),
     );

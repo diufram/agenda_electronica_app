@@ -1,27 +1,19 @@
 import 'package:agenda_electronica/domain/response/profesor_alumnos_materia_response.dart';
 import 'package:agenda_electronica/services/globals.dart';
 import 'package:agenda_electronica/ui/screens/Profesor/profesor_bloc.dart';
+import 'package:agenda_electronica/ui/screens/Profesor/profesor_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 
-class ProfesorAsistenciaScreen extends StatefulWidget {
+class ProfesorAsistenciaScreen extends StatelessWidget {
   const ProfesorAsistenciaScreen({super.key, required this.idMateriaHorario});
 
   final int idMateriaHorario;
 
   @override
-  State<ProfesorAsistenciaScreen> createState() =>
-      _ProfesorAsistenciaScreenState();
-}
-
-class _ProfesorAsistenciaScreenState extends State<ProfesorAsistenciaScreen> {
-  // Lista para almacenar los IDs de los alumnos marcados
-  List<int> _selectedAlumnos = [];
-
-  @override
   Widget build(BuildContext context) {
-    final bloc = context.watch<ProfesorBloc>();
+    final bloc = context.read<ProfesorBloc>();
     return Scaffold(
       appBar: AppBar(
         backgroundColor: backgroundPrimary,
@@ -35,6 +27,7 @@ class _ProfesorAsistenciaScreenState extends State<ProfesorAsistenciaScreen> {
         centerTitle: true,
         leading: IconButton(
           onPressed: () {
+            bloc.clearAsistencia();
             Navigator.pop(context);
           },
           icon: const Icon(
@@ -44,9 +37,19 @@ class _ProfesorAsistenciaScreenState extends State<ProfesorAsistenciaScreen> {
         ),
         actions: <Widget>[
           IconButton(
-              onPressed: () {
+              onPressed: () async {
                 // Guardar los datos de asistencia aquí
-                print("Alumnos presentes: $_selectedAlumnos");
+
+                await bloc.createAsistencia(idMateriaHorario);
+                if (context.mounted) {
+                  Navigator.pushAndRemoveUntil(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => ProfesorScreen.init(context)),
+                    (Route<dynamic> route) =>
+                        false, // Aquí defines el predicado
+                  );
+                }
               },
               icon: Icon(
                 Icons.save_outlined,
@@ -57,7 +60,7 @@ class _ProfesorAsistenciaScreenState extends State<ProfesorAsistenciaScreen> {
       ),
       body: SafeArea(
         child: FutureBuilder<List<ProfesorAlumnosMateria>>(
-          future: bloc.getAlumnosFromMateria(widget.idMateriaHorario),
+          future: bloc.getAlumnosFromMateria(idMateriaHorario),
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
               return const Center(child: CircularProgressIndicator());
@@ -71,9 +74,8 @@ class _ProfesorAsistenciaScreenState extends State<ProfesorAsistenciaScreen> {
                 itemCount: snapshot.data!.length,
                 itemBuilder: (context, i) {
                   final alumno = snapshot.data![i];
-                  // Verificar si el ID del alumno está en la lista
-                  bool isChecked = _selectedAlumnos.contains(alumno.id);
-
+                  bool isChecked =
+                      context.watch<ProfesorBloc>().containsAlumno(alumno.id);
                   return Padding(
                     padding: EdgeInsets.only(
                       right: 10.sp,
@@ -110,15 +112,13 @@ class _ProfesorAsistenciaScreenState extends State<ProfesorAsistenciaScreen> {
                             ),
                             value: isChecked,
                             onChanged: (bool? value) {
-                              setState(() {
-                                if (value == true) {
-                                  // Agregar el ID del alumno si está marcado
-                                  _selectedAlumnos.add(alumno.id);
-                                } else {
-                                  // Remover el ID del alumno si está desmarcado
-                                  _selectedAlumnos.remove(alumno.id);
-                                }
-                              });
+                              if (value == true) {
+                                // Agregar el ID del alumno si está marcado
+                                bloc.addAlumnosPresentes(alumno.id);
+                              } else {
+                                // Remover el ID del alumno si está desmarcado
+                                bloc.removeAlumnosPresentes(alumno.id);
+                              }
                             },
                             controlAffinity: ListTileControlAffinity.leading,
                           ),

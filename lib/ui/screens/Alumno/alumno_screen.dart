@@ -3,8 +3,11 @@ import 'package:agenda_electronica/domain/repository/local_repository_intr.dart'
 import 'package:agenda_electronica/domain/response/alumno_materia_response.dart';
 import 'package:agenda_electronica/services/globals.dart';
 import 'package:agenda_electronica/ui/screens/Alumno/alumno_bloc.dart';
+import 'package:agenda_electronica/ui/screens/Alumno/alumno_generar_horario_screen.dart';
+import 'package:agenda_electronica/ui/screens/Alumno/alumno_horario_generado_screen.dart';
 import 'package:agenda_electronica/ui/screens/Alumno/alumno_tareas_screen.dart';
 import 'package:agenda_electronica/ui/screens/Alumno/alumno_notifications_screen.dart';
+import 'package:agenda_electronica/ui/screens/login/login_screnn.dart';
 import 'package:flutter/material.dart';
 
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -29,6 +32,7 @@ class AlumnoScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: backgroundPrimary,
+        iconTheme: const IconThemeData(color: Colors.white),
         title: Text(
           "Tus Materias",
           style: Theme.of(context)
@@ -41,7 +45,7 @@ class AlumnoScreen extends StatelessWidget {
           IconButton(
             icon: const Icon(
               Icons.notifications_on_outlined,
-              color: Colors.white, // Asegúrate de que el color sea visible
+              //color: Colors.white, // Asegúrate de que el color sea visible
             ),
             onPressed: () {
               Navigator.push(
@@ -51,6 +55,62 @@ class AlumnoScreen extends StatelessWidget {
             },
           ),
         ],
+      ),
+      drawer: Drawer(
+        child: ListView(
+          padding: EdgeInsets.zero,
+          children: <Widget>[
+            // Cabecera del Drawer
+            DrawerHeader(
+              decoration: const BoxDecoration(
+                color: backgroundPrimary,
+              ),
+              child: Text(
+                'Agenda Electronica',
+                style: Theme.of(context)
+                    .textTheme
+                    .titleLarge!
+                    .copyWith(color: Colors.white),
+              ),
+            ),
+            // Opciones del Drawer
+            ListTile(
+              leading: const Icon(Icons.book),
+              title: Text(
+                'Generar Horario de Estudio',
+                style: Theme.of(context).textTheme.bodyLarge,
+              ),
+              onTap: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => AlumnoGenerarHorarioScreen()));
+              },
+            ),
+            ListTile(
+              leading: const Icon(Icons.bookmark_added_outlined),
+              title: const Text('Horario Generado'),
+              onTap: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => AlumnoHorarioGeneradoScreen()));
+              },
+            ),
+
+            ListTile(
+              leading: const Icon(Icons.logout),
+              title: const Text('Cerrar Sesión'),
+              onTap: () {
+                Navigator.pushAndRemoveUntil(
+                  context,
+                  MaterialPageRoute(builder: (context) => const LoginScrenn()),
+                  (Route<dynamic> route) => false,
+                );
+              },
+            ),
+          ],
+        ),
       ),
       body: SafeArea(
         child: FutureBuilder<List<AlumnoMateria>>(

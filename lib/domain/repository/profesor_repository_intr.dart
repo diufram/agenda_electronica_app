@@ -11,4 +11,14 @@ abstract class ProfesorRepositoryInterface {
   Future<Response> getAlumnosForMateria(int idMateriaHorario);
 
   Future<void> createTarea(int idMateriaHorario, TareaRequest tarea);
+
+  Future<void> createAsistencia(int idMateria, List<int> alumnos);
+
+  Future<Response> getAsistenciasFromMateria(int idMateria);
+
+  Future<Response> getTareasPresentadas(int idTarea);
+
+  Future<Response> getArchivoTarea(int idTareaAlumno);
+
+  Future<void> asignarNota(int idTareaAlumno, double nota);
 }

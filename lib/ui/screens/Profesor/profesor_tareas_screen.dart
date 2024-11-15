@@ -1,9 +1,10 @@
 import 'package:agenda_electronica/domain/response/profesor_tareas_materia_response.dart';
 import 'package:agenda_electronica/services/globals.dart';
 import 'package:agenda_electronica/ui/screens/Profesor/profesor_asistencia_screen.dart';
+import 'package:agenda_electronica/ui/screens/Profesor/profesor_asistencias_screen.dart';
 import 'package:agenda_electronica/ui/screens/Profesor/profesor_bloc.dart';
 import 'package:agenda_electronica/ui/screens/Profesor/profesor_tarea_crear_screen.dart';
-
+import 'package:agenda_electronica/ui/screens/Profesor/profesor_ver_tareas_presentadas_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
@@ -57,6 +58,13 @@ class ProfesorTareasScreen extends StatelessWidget {
                     context,
                     MaterialPageRoute(
                         builder: (context) => ProfesorTareaCrearScreen(
+                              idMateria: idMateriaHorario,
+                            )));
+              } else if (value == "2") {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => ProfesorAsistenciasScreen(
                               idMateria: idMateriaHorario,
                             )));
               }
@@ -121,11 +129,12 @@ class ProfesorTareasScreen extends StatelessWidget {
 
                   return InkWell(
                       onTap: () {
-                        /*  Navigator.push(
+                        Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => ProfesorMateriaScreen(
-                                    cursoId: profesorCurso.cursoId))); */
+                                builder: (context) =>
+                                    ProfesorVerTareasPresentadasScreen(
+                                        idTarea: profesorTareasMateria.id)));
                       },
                       child: TareaDetalle(
                         profesorTareasMateria: profesorTareasMateria,

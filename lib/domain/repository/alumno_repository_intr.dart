@@ -7,4 +7,7 @@ abstract class AlumnoRepositoryInterface {
   Future<Response> getAlumnoDeberes(int idMateria);
   Future<Response> getArchivoTarea(int idTarea);
   Future<void> presentarTarea(int idTarea, int idAlumno, File archivo);
+  Future<Response> generarHorario(int idAlumno);
+  Future<void> saveHorario(int idAlumno, String horario);
+  Future<Response> getHorarioGenerado(int idAlumno);
 }

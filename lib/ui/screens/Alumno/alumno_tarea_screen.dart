@@ -167,8 +167,9 @@ class AlumnoTareaScreen extends StatelessWidget {
                 onPressed: () async {
                   //await bloc.presentarTarea();
                   print(alumnoTareaMateria.id);
+
                   await bloc.presentarTarea(alumnoTareaMateria.id);
-                  /* if (context.mounted) {
+                  if (context.mounted) {
                     Navigator.pushAndRemoveUntil(
                       context,
                       MaterialPageRoute(
@@ -176,7 +177,7 @@ class AlumnoTareaScreen extends StatelessWidget {
                       (Route<dynamic> route) =>
                           false, // Aquí defines el predicado
                     );
-                  } */
+                  }
                 },
                 style: ElevatedButton.styleFrom(
                   shape: const CircleBorder(),
